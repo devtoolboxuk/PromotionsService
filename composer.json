@@ -1,0 +1,21 @@
+{
+  "name": "devtoolboxuk/PromotionsService",
+  "description": "Promotions Service",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "": "src/",
+      "Devtoolboxuk\\PromotionsService\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Rob Wilson",
+      "email": "rob@dev-toolbox.co.uk"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  }
+}
