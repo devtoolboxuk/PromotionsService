@@ -47,7 +47,8 @@ class PromotionsService extends connection
     {
 
         if (isset($this->markdown[$product_id])) {
-            $benefitValue = $this->getBenefitValue($this->markdown[$product_id]['type'], $this->markdown[$product_id]['value'], $price);
+            $benefitValue = $this->getBenefitValue($this->markdown[$product_id]['type'],
+                $this->markdown[$product_id]['value'], $price);
             $price -= $benefitValue;
         }
 
@@ -96,14 +97,13 @@ class PromotionsService extends connection
 
         foreach ($this->promotion as $promotion) {
             if ($promotion['all_products']) {
-          //      $all_products_flag = $promotion['promotion_id'];
+                $all_products_flag = $promotion['promotion_id'];
             }
         }
 
         if ($all_products_flag) {
             $this->getAllProductsMarkdown($product_ids, $all_products_flag);
         } else {
-
             $this->getIndividualProductMarkdown($product_ids);
         }
 
