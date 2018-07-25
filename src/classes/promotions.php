@@ -26,7 +26,7 @@ class PromotionsService extends connection
     protected $parameter = null;
     protected $promotion = [];
     protected $markdown = [];
-
+    protected $shopperGroups = [];
 
     private function getAllProductsMarkdown($product_ids, $all_products_flag)
     {
@@ -71,7 +71,6 @@ class PromotionsService extends connection
 
             $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-
             foreach ($rows as $row) {
                 if (!isset($this->markdown[$row['product_id']])) {
                     $this->markdown[$row['product_id']] = [
@@ -86,7 +85,7 @@ class PromotionsService extends connection
 
     function getMarkdownPromotions($product_ids, $shopper_group_id)
     {
-
+        $this->markdown = null;
         if (empty($product_ids)) {
             return [];
         }
@@ -104,6 +103,7 @@ class PromotionsService extends connection
         if ($all_products_flag) {
             $this->getAllProductsMarkdown($product_ids, $all_products_flag);
         } else {
+
             $this->getIndividualProductMarkdown($product_ids);
         }
 
@@ -114,6 +114,8 @@ class PromotionsService extends connection
      */
     private function getPromotions($shopper_group_id)
     {
+
+        $this->promotion = [];
         $statement = $this->db->prepare(self::MARKDOWNS_QUERY);
         $statement->bindValue(':shopper_group_id', $shopper_group_id, PDO::PARAM_INT);
 
@@ -150,6 +152,17 @@ class PromotionsService extends connection
     function getPromotion()
     {
         return $this->promotion;
+    }
+
+
+    protected function getWasNowPrice($product_id,$rrp)
+    {
+        $price = $this->getMarkdownPrice($product_id, $rrp);
+        return [
+            'was'=>$rrp,
+            'now'=>$price
+        ];
+
     }
 
     /**
